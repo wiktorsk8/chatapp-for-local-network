@@ -13,6 +13,9 @@ public class Server {
     }
 
     public void boot(){
+
+        System.out.println("Server started.");
+
         while(true){
             try{
                 Socket clientSocket = serverSocket.accept();
