@@ -32,6 +32,7 @@ public class Client {
     }
 
     public static void main(String[] args) throws IOException {
-        Socket socket = new Socket("localhost", 1234);
+        Client client = new Client("<your hostname>", 1234);
+        client.connect();
     }
 }
