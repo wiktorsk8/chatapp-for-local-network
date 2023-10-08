@@ -20,6 +20,7 @@ public class ReadThread implements Runnable{
     public void run() {
         while (true) {
             try {
+                System.out.println("elo");
                 String response = reader.readLine();
                 System.out.println(response);
 

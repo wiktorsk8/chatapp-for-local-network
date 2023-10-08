@@ -1,6 +1,7 @@
 import javax.imageio.IIOException;
 import java.io.*;
 import java.net.Socket;
+import java.util.Scanner;
 
 public class WriteThread implements Runnable{
     private Socket socket;
@@ -21,19 +22,20 @@ public class WriteThread implements Runnable{
     @Override
     public void run() {
         while (true){
-            Console console = System.console();
-            String userName = console.readLine("Enter your name: ");
-            client.setUserName(userName);
-
             try {
-                writer.write(userName);
+                System.out.println("Write thread open");
+                writer.write(client.getUserName());
                 writer.newLine();
                 writer.flush();
 
+                Scanner scanner = new Scanner(System.in);
+
                 String text;
                 do {
-                    text = console.readLine("["+ userName+"]: ");
-                    writer.write(text);
+                    System.out.println("Git ziomek");
+
+                    text = scanner.nextLine();
+                    writer.write(client.getUserName() +": " + text);
                     writer.newLine();
                     writer.flush();
                 }while (!text.equals("bye"));
