@@ -25,7 +25,7 @@ public class ReadThread implements Runnable {
         while (true) {
             try {
                 response = reader.readLine();
-                System.out.print('\n' + response);
+                System.out.print(response);
             } catch (IOException e) {
                 e.printStackTrace();
             }
