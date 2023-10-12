@@ -20,8 +20,12 @@ public class Server {
             try{
                 Socket clientSocket = serverSocket.accept();
                 System.out.println("User connected!!!!!!!!!");
-                UserThread user = new UserThread(clientSocket, this);
-                userThreads.add(user);
+                
+                UserThread userThread = new UserThread(clientSocket, this);
+                userThreads.add(userThread);
+
+                Thread thread = new Thread(userThread);
+                thread.start();
 
             }catch (IOException ex) {
                 System.out.println("Error in the server: " + ex.getMessage());
@@ -31,25 +35,18 @@ public class Server {
         }
     }
 
-    public void broadcast(String message, UserThread currentUser){
+    public void broadcast(String message, UserThread excludeUser){
         for (UserThread user: userThreads){
-            if (!user.equals(currentUser)){
+            if (excludeUser != user){
+                System.out.println("Broadcasting message from: [" + excludeUser.getUserName() + "] to: " + user.getUserName());
+                System.out.println("Message content: " + message);
                 user.sendMessage(message);
             }
         }
     }
 
-    public void add(String name){
+    public void addUserName(String name){
         this.userNames.add(name);
-    }
-
-    public void removeUser(String name, UserThread user){
-        userNames.remove(name);
-        userThreads.remove(user);
-    }
-
-    public boolean hasUsers() {
-        return !this.userNames.isEmpty();
     }
 
     public Set<String> getUserNames(){

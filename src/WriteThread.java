@@ -1,49 +1,43 @@
 import javax.imageio.IIOException;
 import java.io.*;
 import java.net.Socket;
-import java.util.Scanner;
 
-public class WriteThread implements Runnable{
+public class WriteThread extends Thread {
     private Socket socket;
     private Client client;
-    private BufferedWriter writer;
-    public WriteThread(Socket socket, Client client){
+    private PrintWriter writer;
+
+    public WriteThread(Socket socket, Client client) {
         this.socket = socket;
         this.client = client;
 
-        try{
+        try {
             OutputStream output = socket.getOutputStream();
-            writer = new BufferedWriter(new OutputStreamWriter(output));
-        }catch (IOException e){
+            this.writer = new PrintWriter(output, true);
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
     }
+
     @Override
     public void run() {
-        while (true){
+        System.out.println("Chat here...");
+        BufferedReader sysIn = new BufferedReader(new InputStreamReader(System.in));
+        System.out.print("Enter your username: ");
+        try {
+            writer.println(sysIn.readLine());
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        while (true) {
             try {
-                System.out.println("Write thread open");
-                writer.write(client.getUserName());
-                writer.newLine();
-                writer.flush();
-
-                Scanner scanner = new Scanner(System.in);
-
-                String text;
-                do {
-                    System.out.println("Git ziomek");
-
-                    text = scanner.nextLine();
-                    writer.write(client.getUserName() +": " + text);
-                    writer.newLine();
-                    writer.flush();
-                }while (!text.equals("bye"));
-
-                socket.close();
-
+                String message = sysIn.readLine();
+                writer.println(message);
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                e.printStackTrace();
             }
         }
     }

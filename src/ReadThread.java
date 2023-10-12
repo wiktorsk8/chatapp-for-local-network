@@ -1,33 +1,32 @@
 import java.io.*;
 import java.net.Socket;
 
-public class ReadThread implements Runnable{
+public class ReadThread implements Runnable {
     private Socket socket;
     private Client client;
     private BufferedReader reader;
-    public ReadThread(Socket socket, Client client){
+
+    public ReadThread(Socket socket, Client client) {
         this.socket = socket;
         this.client = client;
 
-        try{
+        try {
             InputStream input = socket.getInputStream();
-            reader = new BufferedReader(new InputStreamReader(input));
-        }catch (IOException e){
+            this.reader = new BufferedReader(new InputStreamReader(input));
+
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
     @Override
     public void run() {
+        String response;
         while (true) {
             try {
-                System.out.println("elo");
-                String response = reader.readLine();
+                response = reader.readLine();
                 System.out.println(response);
-
-                if (client.getUserName() != null) {
-                    System.out.print("[" + client.getUserName() + "]: ");
-                }
-            }catch (IOException e){
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }
