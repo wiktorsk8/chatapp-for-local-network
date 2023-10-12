@@ -26,6 +26,7 @@ public class WriteThread extends Thread {
         BufferedReader sysIn = new BufferedReader(new InputStreamReader(System.in));
         System.out.print("Enter your username: ");
         try {
+
             writer.println(sysIn.readLine());
 
         } catch (IOException e) {
