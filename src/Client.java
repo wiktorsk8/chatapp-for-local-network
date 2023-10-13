@@ -4,6 +4,7 @@ import java.net.Socket;
 public class Client {
     private String hostname;
     private int port;
+    private String userName;
 
     public Client(String hostname, int port){
         this.hostname = hostname;
@@ -24,7 +25,9 @@ public class Client {
         }
     }
 
-    
+    public void setUserName(String name){
+        this.userName = name;
+    }
 
     public static void main(String[] args) throws IOException {
         Client client = new Client("localhost", 1234);

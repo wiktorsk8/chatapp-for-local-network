@@ -24,7 +24,7 @@ public class UserThread extends Thread {
             String clientMessage;
             do {
                 clientMessage = reader.readLine();
-                serverMessage = "[" + userName + "]: "+ clientMessage;
+                this.serverMessage = "[" + userName + "]: "+ clientMessage;
                 server.broadcast(serverMessage, this);
             } while (!clientMessage.equals("bye"));
         } catch (IOException e) {
@@ -47,9 +47,6 @@ public class UserThread extends Thread {
     private void addUser() throws IOException {
         this.userName = reader.readLine();
         server.addUserName(userName);
-        System.out.println("-----------------------------------------");
-        System.out.println("SERVER - new user: " + userName);
-        System.out.println("-----------------------------------------");
     }
 
     private void setInputOutput() throws IOException {
@@ -58,6 +55,5 @@ public class UserThread extends Thread {
 
         OutputStream output = socket.getOutputStream();
         writer = new PrintWriter(output);
-        System.out.println("Input/Output has been set...");
     }
 }

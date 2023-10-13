@@ -1,6 +1,8 @@
 import javax.imageio.IIOException;
+import java.awt.*;
 import java.io.*;
 import java.net.Socket;
+import java.io.Console;
 
 public class WriteThread extends Thread {
     private Socket socket;
@@ -22,24 +24,26 @@ public class WriteThread extends Thread {
 
     @Override
     public void run() {
-        System.out.println("Chat here...");
         BufferedReader sysIn = new BufferedReader(new InputStreamReader(System.in));
-        System.out.print("Enter your username: ");
+
+        System.out.println("Enter name: ");
+        String userName = null;
         try {
-
-            writer.println(sysIn.readLine());
-
+            userName = sysIn.readLine();
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
+        client.setUserName(userName);
+        writer.println(userName);
 
         while (true) {
+            String message = null;
             try {
-                String message = sysIn.readLine();
-                writer.println(message);
+                message = sysIn.readLine();
             } catch (IOException e) {
-                e.printStackTrace();
+                throw new RuntimeException(e);
             }
+            writer.println(message);
         }
     }
 }

@@ -38,8 +38,6 @@ public class Server {
     public void broadcast(String message, UserThread excludeUser){
         for (UserThread user: userThreads){
             if (excludeUser != user){
-                System.out.println("Broadcasting message from: [" + excludeUser.getUserName() + "] to: " + user.getUserName());
-                System.out.println("Message content: " + message);
                 user.sendMessage(message);
             }
         }
